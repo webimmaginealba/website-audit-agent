@@ -6,7 +6,7 @@ import openai
 
 st.set_page_config(page_title="Website Audit AI Agent", layout="wide")
 st.title("🔎 Website Audit AI Agent")
-st.markdown("Carica un file Excel con una colonna 'Website'. L'app analizzerà il CMS e i contenuti testuali.")
+st.markdown("Carica un file Excel con una colonna 'Website'. L'app analizzerà i contenuti testuali dei siti selezionati.")
 
 openai_api_key = st.text_input("Inserisci la tua OpenAI API Key", type="password")
 
@@ -25,7 +25,7 @@ def extract_text_from_homepage(url):
 
 def analyze_with_gpt(content, key):
     try:
-        openai.api_key = key
+        client = openai.OpenAI(api_key=key)
         prompt = f"""
 Analizza il seguente contenuto della homepage di un sito aziendale:
 
@@ -37,7 +37,7 @@ Fornisci:
 3. Un giudizio sulla presenza e chiarezza delle CTA
 4. 3 suggerimenti per migliorare il contenuto, anche dal punto di vista commerciale e semantico.
 """
-        response = openai.ChatCompletion.create(
+        response = client.chat.completions.create(
             model="gpt-4",
             messages=[{"role": "user", "content": prompt}],
             temperature=0.7
