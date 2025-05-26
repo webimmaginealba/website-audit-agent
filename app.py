@@ -38,7 +38,7 @@ Fornisci:
 4. 3 suggerimenti per migliorare il contenuto, anche dal punto di vista commerciale e semantico.
 """
         response = client.chat.completions.create(
-            model="gpt-4",
+            model="gpt-4-0125-preview",
             messages=[{"role": "user", "content": prompt}],
             temperature=0.7
         )
