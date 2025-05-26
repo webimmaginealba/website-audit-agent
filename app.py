@@ -38,7 +38,7 @@ Fornisci:
 4. 3 suggerimenti per migliorare il contenuto, anche dal punto di vista commerciale e semantico.
 """
         response = openai.ChatCompletion.create(
-            model="gpt-4-0125-preview",
+            model="gpt-3.5-turbo",
             messages=[{"role": "user", "content": prompt}],
             temperature=0.7
         )
