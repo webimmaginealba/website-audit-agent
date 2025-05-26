@@ -25,7 +25,7 @@ def extract_text_from_homepage(url):
 
 def analyze_with_gpt(content, key):
     try:
-        client = openai.OpenAI(api_key=key)
+        openai.api_key = key
         prompt = f"""
 Analizza il seguente contenuto della homepage di un sito aziendale:
 
@@ -37,8 +37,8 @@ Fornisci:
 3. Un giudizio sulla presenza e chiarezza delle CTA
 4. 3 suggerimenti per migliorare il contenuto, anche dal punto di vista commerciale e semantico.
 """
-        response = client.chat.completions.create(
-            model="gpt-4-0125-preview",
+        response = openai.ChatCompletion.create(
+            model="gpt-4",
             messages=[{"role": "user", "content": prompt}],
             temperature=0.7
         )
