@@ -19,7 +19,7 @@ def extract_text_from_homepage(url):
         for script in soup(["script", "style", "noscript"]):
             script.extract()
         text = ' '.join(soup.stripped_strings)
-        return text[:4000]  # limita a 4000 caratteri per prompt
+        return text[:4000]
     except Exception as e:
         return f"Errore durante lo scraping: {e}"
 
@@ -55,10 +55,11 @@ if uploaded_file:
         st.success("File caricato correttamente!")
         st.dataframe(df)
 
-        if openai_api_key and st.button("Avvia analisi"):
+        selected_sites = st.multiselect("Seleziona i siti da analizzare", df["Website"].tolist())
+
+        if openai_api_key and selected_sites and st.button("Avvia analisi"):
             results = []
-            for index, row in df.iterrows():
-                site = row["Website"]
+            for site in selected_sites:
                 st.write(f"🔍 Analisi in corso per: {site}")
                 homepage_text = extract_text_from_homepage(site)
                 analysis = analyze_with_gpt(homepage_text, openai_api_key)
